@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
-#include <time.h>
-#include <stdlib.h>
+#include <random>
 #include <iomanip>
 int main()
 {
@@ -9,14 +8,15 @@ int main()
     int n;
     int egz;
     float total=0;
-    srand(time(NULL));
+    std::mt19937 mt();
+    std::uniform_int_distribution d(1,10);
     std::cout<<"iveskit varda, tada enter, tada pavarde"<<std::endl;
     std::cin>>var>>pav;
-    n=rand()%30+6;
-    egz=rand()%10+1;
+    n=d(mt);
+    egz=d(mt);
     for(int i=0;i<n;i++)
     {
-        total=total+rand()%10+1;
+        total=total+d(mt);
         std::cout<<total<<"\n";
     }
     total=total/n*0.4+egz*0.6;
