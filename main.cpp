@@ -1,21 +1,25 @@
 #include <iostream>
 #include <string>
-#include <random>
 #include <iomanip>
+#include <vector>
 int main()
 {
     std::string var, pav;
-    int n;
+    std::size_t n=8; //tiesiog prilyginu ne nuliui
     int egz;
     float total=0;
-    std::random_device rd; //ant bibliotekos kompiuterio neveikia...
-    std::mt19937 mt (rd());
-    std::uniform_int_distribution<> d(1,10);
+    std::vector<int> paz;
     std::cout<<"iveskit varda, tada enter, tada pavarde"<<std::endl;
     std::cin>>var>>pav;
-    n=d(mt);
-    egz=d(mt);
-    int *paz= new int[n];
+    std::cout<<"veskit pazymius, kai baigsit, spauskit 0"<<"\n";
+    while (n!=0)
+    {
+        std::cin>>n;
+        paz.push_back(n);
+    }
+    paz.pop_back();
+    std::cout<<"Egzamino rez?";
+    std::cin>>egz;
     int temp;
     std::cout<<"su vidurkiu ar mediana? 1-vidurkis, 2-mediana";
     do
@@ -23,14 +27,14 @@ int main()
         std::cin>>temp;
     }
     while (temp!=1 && temp!=2);
-    std::cout<<var<< "  "<<pav<<"  ";
+    std::cout<<"Vardas: "<<var<<"\n"<<"Pavarde: "<<pav<<"\n";
+    n=paz.size();
     for(int i=0; i<n; i++)
     {
-        paz[i]=d(mt);
         total=total+paz[i];
-        std::cout<<paz[i]<<" ";
+        std::cout<<"ND"<<i+1<<": "<<paz[i]<<"\n";
     }
-    std::cout<<egz<<"  ";
+    std::cout<<"Egzaminas: "<<egz<<"\n";
     if(temp==1)
     {
         total=total/n*0.4+egz*0.6;
@@ -57,6 +61,6 @@ int main()
         }
         total=total*0.4+egz*0.6;
     }
-    std::cout << std::setprecision(3) << total;
+    std::cout <<"Galutinis balas:  "<< std::setprecision(3) << total;
     return 0;
 }
