@@ -1,25 +1,41 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <iomanip>
 #include <vector>
 int main()
 {
+    std::ifstream df ("duom.txt");
     std::string var, pav;
     std::size_t n=8; //tiesiog prilyginu ne nuliui
     int egz;
     float total=0;
+    char b;
     std::vector<int> paz;
-    std::cout<<"iveskit varda, tada enter, tada pavarde"<<std::endl;
-    std::cin>>var>>pav;
-    std::cout<<"veskit pazymius, kai baigsit, spauskit 0"<<"\n";
-    while (n!=0)
+    while(b!='\n')
     {
-        std::cin>>n;
-        paz.push_back(n);
+        df.get(b);
     }
+    df.get(b);
+    while(b!=' ')
+    {
+        var.push_back(b);
+        df.get(b);
+    }
+    df.get(b);
+    while(b!=' ')
+    {
+        pav.push_back(b);
+        df.get(b);
+    }
+    while (b!='\n')
+    {
+        df>>n;
+        paz.push_back(n);
+        df.get(b);
+    }
+    egz=paz.back();
     paz.pop_back();
-    std::cout<<"Egzamino rez?";
-    std::cin>>egz;
     int temp;
     std::cout<<"su vidurkiu ar mediana? 1-vidurkis, 2-mediana";
     do
