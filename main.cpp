@@ -17,7 +17,7 @@ int main()
 {
     std::ifstream df ("duom.txt");
     char b;
-    int n;
+    std::size_t n;
     std::vector<studentai> a;
     a.resize(1);
     while(b!='\n')
@@ -33,7 +33,6 @@ int main()
             a[j].var.push_back(b);
             df.get(b);
         }
-        std::cout<<a[j].var;
         df.get(b);
         while(b!='\t')
         {
@@ -61,41 +60,41 @@ int main()
     while (temp!=1 && temp!=2);
     for(int i=0; i<j; i++)
     {
-        std::cout<<"Vardas: "<<a[j].var<<"\n"<<"Pavarde: "<<a[j].pav<<"\n";
-        n=a[j].paz.size();
-        for(int i=0; i<n; i++)
+        std::cout<<"Vardas: "<<a[i].var<<"\n"<<"Pavarde: "<<a[i].pav<<"\n";
+        n=a[i].paz.size();
+        for(int o=0; o<n; o++)
         {
-            a[j].total=a[j].total+a[j].paz[i];
-            std::cout<<"ND"<<i+1<<": "<<a[j].paz[i]<<"\n";
+            a[i].total=a[i].total+a[i].paz[o];
+            std::cout<<"ND"<<i+1<<": "<<a[i].paz[o]<<"\n";
         }
-        std::cout<<"Egzaminas: "<<a[j].egz<<"\n";
+        std::cout<<"Egzaminas: "<<a[i].egz<<"\n";
         if(temp==1)
         {
-            a[j].total=a[j].total/n*0.4+a[j].egz*0.6;
+            a[i].total=a[i].total/n*0.4+a[i].egz*0.6;
         }
         else
         {
-            for(int i=0; i<n-1; i++)        //isrikiuoju nuo did iki maz
+            for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
             {
-                if(a[j].paz[i]<a[j].paz[i+1])
+                if(a[i].paz[o]<a[i].paz[o+1])
                 {
-                    a[j].paz[i]=a[j].paz[i]+a[j].paz[i+1];
-                    a[j].paz[i+1]=a[j].paz[i]-a[j].paz[i+1];
-                    a[j].paz[i]=a[j].paz[i]-a[j].paz[i+1];
-                    i=-1;
+                    a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
+                    a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
+                    a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
+                    o=-1;
                 }
             }
             if(n%2==0)
             {
-                a[j].total=(a[j].paz[n/2-1]+a[j].paz[n/2])/2;
+                a[i].total=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
             }
             else
             {
-                a[j].total=a[j].paz[n/2];
+                a[i].total=a[i].paz[n/2];
             }
-            a[j].total=a[j].total*0.4+a[j].egz*0.6;
+            a[i].total=a[i].total*0.4+a[i].egz*0.6;
         }
-        std::cout <<"Galutinis balas:  "<< std::setprecision(3) << a[j].total;
+        std::cout <<"Galutinis balas:  "<< std::setprecision(3) << a[i].total<<"\n";
     }
     return 0;
 }
