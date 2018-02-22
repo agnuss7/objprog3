@@ -3,39 +3,55 @@
 #include <string>
 #include <iomanip>
 #include <vector>
+#include <cctype>
+
+struct studentai
+{
+    std::string var;
+    std::string pav;
+    std::vector<size_t> paz;
+    std::size_t egz;
+    float total;
+};
 int main()
 {
     std::ifstream df ("duom.txt");
-    std::string var, pav;
-    std::size_t n=8; //tiesiog prilyginu ne nuliui
-    int egz;
-    float total=0;
     char b;
-    std::vector<int> paz;
+    int n;
+    std::vector<studentai> a;
+    a.resize(1);
     while(b!='\n')
     {
         df.get(b);
     }
     df.get(b);
-    while(b!=' ')
+    int j=0;
+    while (isalpha(b)>0)
     {
-        var.push_back(b);
+        while(b!='\t')
+        {
+            a[j].var.push_back(b);
+            df.get(b);
+        }
+        std::cout<<a[j].var;
         df.get(b);
-    }
-    df.get(b);
-    while(b!=' ')
-    {
-        pav.push_back(b);
+        while(b!='\t')
+        {
+            a[j].pav.push_back(b);
+            df.get(b);
+        }
+        while (b!='\n')
+        {
+            df>>n;
+            a[j].paz.push_back(n);
+            df.get(b);
+        }
+        a[j].egz=a[j].paz.back();
+        a[j].paz.pop_back();
         df.get(b);
+        j++;
+        a.resize(j+1);
     }
-    while (b!='\n')
-    {
-        df>>n;
-        paz.push_back(n);
-        df.get(b);
-    }
-    egz=paz.back();
-    paz.pop_back();
     int temp;
     std::cout<<"su vidurkiu ar mediana? 1-vidurkis, 2-mediana";
     do
@@ -43,40 +59,43 @@ int main()
         std::cin>>temp;
     }
     while (temp!=1 && temp!=2);
-    std::cout<<"Vardas: "<<var<<"\n"<<"Pavarde: "<<pav<<"\n";
-    n=paz.size();
-    for(int i=0; i<n; i++)
+    for(int i=0; i<j; i++)
     {
-        total=total+paz[i];
-        std::cout<<"ND"<<i+1<<": "<<paz[i]<<"\n";
-    }
-    std::cout<<"Egzaminas: "<<egz<<"\n";
-    if(temp==1)
-    {
-        total=total/n*0.4+egz*0.6;
-    }
-    else
-    {
-        for(int i=0; i<n-1; i++)        //isrikiuoju nuo did iki maz
+        std::cout<<"Vardas: "<<a[j].var<<"\n"<<"Pavarde: "<<a[j].pav<<"\n";
+        n=a[j].paz.size();
+        for(int i=0; i<n; i++)
         {
-            if(paz[i]<paz[i+1])
-            {
-                paz[i]=paz[i]+paz[i+1];
-                paz[i+1]=paz[i]-paz[i+1];
-                paz[i]=paz[i]-paz[i+1];
-                i=-1;
-            }
+            a[j].total=a[j].total+a[j].paz[i];
+            std::cout<<"ND"<<i+1<<": "<<a[j].paz[i]<<"\n";
         }
-        if(n%2==0)
+        std::cout<<"Egzaminas: "<<a[j].egz<<"\n";
+        if(temp==1)
         {
-            total=(paz[n/2-1]+paz[n/2])/2;
+            a[j].total=a[j].total/n*0.4+a[j].egz*0.6;
         }
         else
         {
-            total=paz[n/2];
+            for(int i=0; i<n-1; i++)        //isrikiuoju nuo did iki maz
+            {
+                if(a[j].paz[i]<a[j].paz[i+1])
+                {
+                    a[j].paz[i]=a[j].paz[i]+a[j].paz[i+1];
+                    a[j].paz[i+1]=a[j].paz[i]-a[j].paz[i+1];
+                    a[j].paz[i]=a[j].paz[i]-a[j].paz[i+1];
+                    i=-1;
+                }
+            }
+            if(n%2==0)
+            {
+                a[j].total=(a[j].paz[n/2-1]+a[j].paz[n/2])/2;
+            }
+            else
+            {
+                a[j].total=a[j].paz[n/2];
+            }
+            a[j].total=a[j].total*0.4+a[j].egz*0.6;
         }
-        total=total*0.4+egz*0.6;
+        std::cout <<"Galutinis balas:  "<< std::setprecision(3) << a[j].total;
     }
-    std::cout <<"Galutinis balas:  "<< std::setprecision(3) << total;
     return 0;
 }

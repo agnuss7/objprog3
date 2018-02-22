@@ -1,0 +1,4 @@
+vardas	pavarde		nd1	nd2	nd3	egz
+agne	burokaite	9	8	10	10
+laura	burokaite	9	6	7	8
+eizawa	sensei		10	9	10	10
