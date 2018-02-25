@@ -3,18 +3,16 @@
 #include <string>
 #include <iomanip>
 #include <vector>
-
-struct studentai
-{
-    std::string var;
-    std::string pav;
-    std::vector<size_t> paz;
-    std::size_t egz;
-    float total;
-};
+#include "studentai.h"
+#include "sukeist.h"
 int main()
 {
-    std::ifstream df ("kursiokai.txt");
+    std::ifstream df("kursiokai.txt");
+    if(!df)
+    {
+        std::cout<<"failas neegzistuoja";
+        return 0;
+    }
     char b;
     std::size_t n;
     std::vector<studentai> a;
@@ -42,11 +40,18 @@ int main()
             a[j].pav.push_back(b);
             df.get(b);
         }
-        while (b!='\n')
+        try
         {
-            df>>n;
-            a[j].paz.push_back(n);
-            df.get(b);
+            while (b!='\n')
+            {
+                df>>n;
+                a[j].paz.push_back(n);
+                df.get(b);
+            }
+        }
+        catch (std::exception& e)
+        {
+            std::cout<<"kursiokai.txt failas neteisingu formatu. greaiciausiai nera paciam gale perejimo i kita eilute.\n";
         }
         a[j].egz=a[j].paz.back();
         a[j].paz.pop_back();
@@ -56,66 +61,70 @@ int main()
     }
     df.close();
     a.resize(j);
-    std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
-    studentai g;
-    for(int i=0; i<j-1; i++)
+    try
     {
-        if(a[i].pav>a[i+1].pav)
+        std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
+        for(int i=0; i<j-1; i++)
         {
-            g=a[i];
-            a[i]=a[i+1];
-            a[i+1]=g;
-            i=-1;
-        }
-    }
-    for(std::size_t i=0; i<j; i++)
-    {
-        std::cout<<a[i].var;
-        if (a[i].var.size()<8)
-        {
-            std::cout<<"\t\t";
-        }
-        else
-        {
-            std::cout<<"\t";
-        }
-        std::cout<<a[i].pav;
-        if (a[i].pav.size()<8)
-        {
-            std::cout<<"\t\t";
-        }
-        else
-        {
-            std::cout<<"\t";
-        }
-        n=a[i].paz.size();
-        for(std::size_t o=0; o<n; o++)
-        {
-            a[i].total=a[i].total+a[i].paz[o];
-        }
-
-        a[i].total=a[i].total/n*0.4+a[i].egz*0.6;
-        std::cout<<std::setprecision(3)<<a[i].total<<"\t\t";
-        for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
-        {
-            if(a[i].paz[o]<a[i].paz[o+1])
+            if(a[i].pav>a[i+1].pav)
             {
-                a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
-                a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
-                a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
-                o=-1;
+                sukeist(a[i],a[i+1]);
+                i=-1;
             }
         }
-        if(n%2==0)
+        for(std::size_t i=0; i<j; i++)
         {
-            a[i].total=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
+            std::cout<<a[i].var;
+            if (a[i].var.size()<8)
+            {
+                std::cout<<"\t\t";
+            }
+            else
+            {
+                std::cout<<"\t";
+            }
+            std::cout<<a[i].pav;
+            if (a[i].pav.size()<8)
+            {
+                std::cout<<"\t\t";
+            }
+            else
+            {
+                std::cout<<"\t";
+            }
+            n=a[i].paz.size();
+            for(std::size_t o=0; o<n; o++)
+            {
+                a[i].total=a[i].total+a[i].paz[o];
+            }
+
+            a[i].total=a[i].total/n*0.4+a[i].egz*0.6;
+            std::cout<<std::setprecision(3)<<a[i].total<<"\t\t";
+            for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
+            {
+                if(a[i].paz[o]<a[i].paz[o+1])
+                {
+                    a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
+                    a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
+                    a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
+                    o=-1;
+                }
+            }
+            if(n%2==0)
+            {
+                a[i].total=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
+            }
+            else
+            {
+                a[i].total=a[i].paz[n/2];
+            }
+            a[i].total=a[i].total*0.4+a[i].egz*0.6;
+            std::cout<<std::setprecision(3)<<a[i].total<<"\n";
         }
-        else
-        {
-            a[i].total=a[i].paz[n/2];
-        }
-        a[i].total=a[i].total*0.4+a[i].egz*0.6;
-        std::cout<<std::setprecision(3)<<a[i].total<<"\n";
+    }
+    catch (std::bad_alloc& e)
+    {
+        std::cout<<"negalime isrikiuot vardu.";
     }
     return 0;
 }
