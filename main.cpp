@@ -3,7 +3,6 @@
 #include <string>
 #include <iomanip>
 #include <vector>
-#include <cctype>
 
 struct studentai
 {
@@ -15,7 +14,7 @@ struct studentai
 };
 int main()
 {
-    std::ifstream df ("duom.txt");
+    std::ifstream df ("kursiokai.txt");
     char b;
     std::size_t n;
     std::vector<studentai> a;
@@ -25,7 +24,7 @@ int main()
         df.get(b);
     }
     df.get(b);
-    int j=0;
+    std::size_t j=0;
     while (isalpha(b)>0)
     {
         while(b!='\t')
@@ -34,6 +33,10 @@ int main()
             df.get(b);
         }
         df.get(b);
+        if(b=='\t')
+        {
+            df.get(b);
+        }
         while(b!='\t')
         {
             a[j].pav.push_back(b);
@@ -51,50 +54,68 @@ int main()
         j++;
         a.resize(j+1);
     }
-    int temp;
-    std::cout<<"su vidurkiu ar mediana? 1-vidurkis, 2-mediana";
-    do
+    df.close();
+    a.resize(j);
+    std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
+    studentai g;
+    for(int i=0; i<j-1; i++)
     {
-        std::cin>>temp;
-    }
-    while (temp!=1 && temp!=2);
-    for(int i=0; i<j; i++)
-    {
-        std::cout<<"Vardas: "<<a[i].var<<"\n"<<"Pavarde: "<<a[i].pav<<"\n";
-        n=a[i].paz.size();
-        for(int o=0; o<n; o++)
+        if(a[i].pav>a[i+1].pav)
         {
-            a[i].total=a[i].total+a[i].paz[o];
-            std::cout<<"ND"<<i+1<<": "<<a[i].paz[o]<<"\n";
+            g=a[i];
+            a[i]=a[i+1];
+            a[i+1]=g;
+            i=-1;
         }
-        std::cout<<"Egzaminas: "<<a[i].egz<<"\n";
-        if(temp==1)
+    }
+    for(std::size_t i=0; i<j; i++)
+    {
+        std::cout<<a[i].var;
+        if (a[i].var.size()<8)
         {
-            a[i].total=a[i].total/n*0.4+a[i].egz*0.6;
+            std::cout<<"\t\t";
         }
         else
         {
-            for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
-            {
-                if(a[i].paz[o]<a[i].paz[o+1])
-                {
-                    a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
-                    a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
-                    a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
-                    o=-1;
-                }
-            }
-            if(n%2==0)
-            {
-                a[i].total=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
-            }
-            else
-            {
-                a[i].total=a[i].paz[n/2];
-            }
-            a[i].total=a[i].total*0.4+a[i].egz*0.6;
+            std::cout<<"\t";
         }
-        std::cout <<"Galutinis balas:  "<< std::setprecision(3) << a[i].total<<"\n";
+        std::cout<<a[i].pav;
+        if (a[i].pav.size()<8)
+        {
+            std::cout<<"\t\t";
+        }
+        else
+        {
+            std::cout<<"\t";
+        }
+        n=a[i].paz.size();
+        for(std::size_t o=0; o<n; o++)
+        {
+            a[i].total=a[i].total+a[i].paz[o];
+        }
+
+        a[i].total=a[i].total/n*0.4+a[i].egz*0.6;
+        std::cout<<std::setprecision(3)<<a[i].total<<"\t\t";
+        for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
+        {
+            if(a[i].paz[o]<a[i].paz[o+1])
+            {
+                a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
+                a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
+                a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
+                o=-1;
+            }
+        }
+        if(n%2==0)
+        {
+            a[i].total=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
+        }
+        else
+        {
+            a[i].total=a[i].paz[n/2];
+        }
+        a[i].total=a[i].total*0.4+a[i].egz*0.6;
+        std::cout<<std::setprecision(3)<<a[i].total<<"\n";
     }
     return 0;
 }
