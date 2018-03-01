@@ -52,6 +52,7 @@ int main()
         catch (std::exception& e)
         {
             std::cout<<"kursiokai.txt failas neteisingu formatu. greaiciausiai nera paciam gale perejimo i kita eilute.\n";
+            return 0;
         }
         a[j].egz=a[j].paz.back();
         a[j].paz.pop_back();
@@ -63,7 +64,6 @@ int main()
     a.resize(j);
     try
     {
-        std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
         for(int i=0; i<j-1; i++)
         {
             if(a[i].pav>a[i+1].pav)
@@ -72,7 +72,52 @@ int main()
                 i=-1;
             }
         }
-        for(std::size_t i=0; i<j; i++)
+        for(std::size_t i=0; i<j; i++) //suskaiciuoja nd vidurkius/medianas
+        {
+
+            n=a[i].paz.size();
+            a[i].vidnd=0;
+            for(std::size_t o=0; o<n; o++)
+            {
+                a[i].vidnd=a[i].vidnd+a[i].paz[o];
+            }
+            a[i].vidnd=a[i].vidnd/n;
+            for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
+            {
+                if(a[i].paz[o]<a[i].paz[o+1])
+                {
+                    a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
+                    a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
+                    a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
+                    o=-1;
+                }
+            }
+            if(n%2==0)
+            {
+                a[i].mednd=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
+            }
+            else
+            {
+                a[i].mednd=a[i].paz[n/2];
+            }
+
+        }
+        std::size_t f=j; //f zymes kelintam elemente jau yra nelaike egzamino vaikai
+        for(int i=0; i<j; i++)
+        {
+            if((a[i].vidnd<6 || a[i].mednd<6) && i<f)
+            {
+                for(int o=i; o<j-1; o++)
+                {
+                    sukeist(a[o],a[o+1]);
+                }
+                i--;
+                f--;
+            }
+        }
+        std::cout<<"The cool kidz:\n";
+        std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
+        for(std::size_t i=0; i<f; i++)
         {
             std::cout<<a[i].var;
             if (a[i].var.size()<8)
@@ -92,34 +137,37 @@ int main()
             {
                 std::cout<<"\t";
             }
-            n=a[i].paz.size();
-            for(std::size_t o=0; o<n; o++)
-            {
-                a[i].total=a[i].total+a[i].paz[o];
-            }
 
-            a[i].total=a[i].total/n*0.4+a[i].egz*0.6;
-            std::cout<<std::setprecision(3)<<a[i].total<<"\t\t";
-            for(int o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
+            a[i].vidtotal=a[i].vidnd*0.4+a[i].egz*0.6;
+            a[i].medtotal=a[i].mednd*0.4+a[i].egz*0.6;
+            std::cout<<std::setprecision(3)<<a[i].vidtotal<<"\t\t";
+            std::cout<<std::setprecision(3)<<a[i].medtotal<<"\n";
+
+        }
+        std::cout<<"Da stoopid loosers:\n";
+        std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
+        for(f; f<j; f++)
+        {
+            std::cout<<a[f].var;
+            if (a[f].var.size()<8)
             {
-                if(a[i].paz[o]<a[i].paz[o+1])
-                {
-                    a[i].paz[o]=a[i].paz[o]+a[i].paz[o+1];
-                    a[i].paz[o+1]=a[i].paz[o]-a[i].paz[o+1];
-                    a[i].paz[o]=a[i].paz[o]-a[i].paz[o+1];
-                    o=-1;
-                }
-            }
-            if(n%2==0)
-            {
-                a[i].total=(a[i].paz[(n/2)-1]+a[i].paz[n/2])/2;
+                std::cout<<"\t\t";
             }
             else
             {
-                a[i].total=a[i].paz[n/2];
+                std::cout<<"\t";
             }
-            a[i].total=a[i].total*0.4+a[i].egz*0.6;
-            std::cout<<std::setprecision(3)<<a[i].total<<"\n";
+            std::cout<<a[f].pav;
+            if (a[f].pav.size()<8)
+            {
+                std::cout<<"\t\t";
+            }
+            else
+            {
+                std::cout<<"\t";
+            }
+
+            std::cout<<"neislaike ir nebuvo prileisti prie egzamino\n";
         }
     }
     catch (std::bad_alloc& e)

@@ -4,5 +4,8 @@ struct studentai
     std::string pav;
     std::vector<size_t> paz;
     std::size_t egz;
-    float total;
+    float vidnd;
+    float mednd;
+    float vidtotal;
+    float medtotal;
 };
