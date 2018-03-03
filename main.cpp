@@ -5,6 +5,7 @@
 #include <vector>
 #include "studentai.h"
 #include "sukeist.h"
+
 int main()
 {
     std::ifstream df("kursiokai.txt");
@@ -144,8 +145,9 @@ int main()
             std::cout<<std::setprecision(3)<<a[i].medtotal<<"\n";
 
         }
+        if(f<j){
         std::cout<<"Da stoopid loosers:\n";
-        std::cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
+        std::cout<<"Vardas\t\tPavarde\t\tnd vidurkis\tnd mediana\n";
         for(f; f<j; f++)
         {
             std::cout<<a[f].var;
@@ -167,8 +169,8 @@ int main()
                 std::cout<<"\t";
             }
 
-            std::cout<<"neislaike ir nebuvo prileisti prie egzamino\n";
-        }
+            std::cout<<std::setprecision(3)<<a[f].vidnd<<"\t\t"<<a[f].mednd<<"\n";
+        }}
     }
     catch (std::bad_alloc& e)
     {
