@@ -3,3 +3,5 @@
 *.cbp
 obj/
 bin/
+*.h
+*.txt
