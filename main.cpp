@@ -5,27 +5,33 @@
 #include <random>
 #include <iomanip>
 #include <chrono>
+#include<stdint.h>
 #include "studentai.h"
 #include "sukeist_v.h"
 const std::size_t n=20;
 typedef std::chrono::high_resolution_clock Clock;
-typedef std::chrono::nanoseconds TimeType;
+typedef std::chrono::milliseconds TimeType;
 using std::cout;
 int main()
 
 {
+    std::string S[]={"1.txt", "2.txt", "3.txt","4.txt","5.txt"};
     char b;
     std::vector<studentai> A;
-    cout<<"skaiciuojam 10000 studentu vectoryje laika\n\n";
-    std::ifstream df("2.txt");
+    cout<<"skaiciuojam 10 studentu vectoryje laika\n\n";
+    std::ifstream df("3.txt");
+
+    std::size_t R = 1000;
+std::chrono::high_resolution_clock::time_point t1;
+std::chrono::high_resolution_clock::time_point t2;
+
+
     df.get(b);
     while(b!='\n')
     {
         df.get(b);
-    }
-    int R = 100;
-    //skaiciuok
-    std::chrono::high_resolution_clock::time_point t1=Clock::now();
+    }//skaiciuok
+    t1=Clock::now();
     //nuo cia
     A.reserve(R);
     A.resize(R);
@@ -62,7 +68,7 @@ int main()
         if(A[i].pav>A[i+1].pav)
         {
             sukeist(A[i],A[i+1]);
-            i=18446744073709551615;
+            i=SIZE_MAX;
         }
     }
 
@@ -89,7 +95,7 @@ int main()
                     A[i].paz[o]=A[i].paz[o]+A[i].paz[o+1];
                     A[i].paz[o+1]=A[i].paz[o]-A[i].paz[o+1];
                     A[i].paz[o]=A[i].paz[o]-A[i].paz[o+1];
-                    o=18446744073709551615;
+                    o=SIZE_MAX;
                 }
             }
             if(n%2==0)
@@ -151,7 +157,7 @@ cout<<"The cool kidz:\n";
         if(f<R){
         cout<<"Da stoopid loosers:\n";
         cout<<"Vardas\t\tPavarde\t\tnd vidurkis\tnd mediana\n";
-        for(f; f<R; f++)
+        while (f<R)
         {
             cout<<A[f].var;
             if (A[f].var.size()<8)
@@ -173,11 +179,17 @@ cout<<"The cool kidz:\n";
             }
 
             cout<<std::setprecision(3)<<A[f].vidnd<<"\t\t"<<A[f].mednd<<"\n";
+            f++;
         }}
 //iki cia
-std::chrono::high_resolution_clock::time_point t2=Clock::now();
+t2=Clock::now();
 cout<<"\n";
-cout<<(std::chrono::duration_cast<TimeType>(t2 - t1)).count()<<"\n";
+cout<<(std::chrono::duration_cast<TimeType>(t2 - t1)).count()<<"\n\n";
+
+
+//
+//
+//
 
 
 
@@ -187,256 +199,5 @@ cout<<(std::chrono::duration_cast<TimeType>(t2 - t1)).count()<<"\n";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   /* std::chrono::high_resolution_clock::time_point t1=Clock::now();
-
-    for(int i=1; i<=n; i++)
-    {
-        rf<<"nd"<<i<<"\t";
-    }
-    rf<<"egzaminas\tgalutinis balas\n";
-    for(int j=0; j<10; j++)
-    {
-        pav="pavarde"+std::to_string(j+1);
-        var="vardas"+std::to_string(j+1);
-        rf<<var;
-        if(var.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        rf<<pav;
-        if(pav.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        egz=d(mt);
-        total=0;
-        for(int i=0; i<n; i++)
-        {
-            paz=d(mt);
-            rf<<paz<<"\t";
-            total=total+paz;
-        }
-
-        rf<<egz<<"\t\t";
-        total=total/n*0.4+egz*0.6;
-        rf << std::setprecision(3) << total << '\n';
-    }
-
-
-
-
-    std::chrono::high_resolution_clock::time_point t2 = Clock::now();
-    std::cout<<(std::chrono::duration_cast<TimeType>(t2 - t1)).count()<<"\n";
-
-
-
-
-
-    //antras failas
-    t1=Clock::now();
-    rf.open("2.txt");
-    rf<<"vardas\t\tpavarde\t\t";
-    for(int i=1; i<=n; i++)
-    {
-        rf<<"nd"<<i<<"\t";
-    }
-    rf<<"egzaminas\tgalutinis balas\n";
-    for(int j=0; j<100; j++)
-    {
-        pav="pavarde"+std::to_string(j+1);
-        var="vardas"+std::to_string(j+1);
-        rf<<var;
-        if(var.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        rf<<pav;
-        if(pav.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        egz=d(mt);
-        total=0;
-        for(int i=0; i<n; i++)
-        {
-            paz=d(mt);
-            rf<<paz<<"\t";
-            total=total+paz;
-        }
-
-        rf<<egz<<"\t\t";
-        total=total/n*0.4+egz*0.6;
-        rf << std::setprecision(3) << total << '\n';
-    }
-    rf.close();
-    t2 = Clock::now();
-    std::cout<<std::chrono::duration_cast<TimeType>(t2 - t1).count()<<"\n";
-
-
-    //trecias failas
-    t1 = Clock::now();
-    rf.open("3.txt");
-    rf<<"vardas\t\tpavarde\t\t";
-    for(int i=1; i<=n; i++)
-    {
-        rf<<"nd"<<i<<"\t";
-    }
-    rf<<"egzaminas\tgalutinis balas\n";
-    for(int j=0; j<1000; j++)
-    {
-        pav="pavarde"+std::to_string(j+1);
-        var="vardas"+std::to_string(j+1);
-        rf<<var;
-        if(var.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        rf<<pav;
-        if(pav.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        egz=d(mt);
-        total=0;
-        for(int i=0; i<n; i++)
-        {
-            paz=d(mt);
-            rf<<paz<<"\t";
-            total=total+paz;
-        }
-
-        rf<<egz<<"\t\t";
-        total=total/n*0.4+egz*0.6;
-        rf << std::setprecision(3) << total << '\n';
-    }
-    rf.close();
-    t2 = Clock::now();
-    std::cout<<std::chrono::duration_cast<TimeType>(t2 - t1).count()<<"\n";
-
-    //ketvirtas failas
-    t1 = Clock::now();
-    rf.open("4.txt");
-    rf<<"vardas\t\tpavarde\t\t";
-    for(int i=1; i<=n; i++)
-    {
-        rf<<"nd"<<i<<"\t";
-    }
-    rf<<"egzaminas\tgalutinis balas\n";
-    for(int j=0; j<10000; j++)
-    {
-        pav="pavarde"+std::to_string(j+1);
-        var="vardas"+std::to_string(j+1);
-        rf<<var;
-        if(var.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        rf<<pav;
-        if(pav.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        egz=d(mt);
-        total=0;
-        for(int i=0; i<n; i++)
-        {
-            paz=d(mt);
-            rf<<paz<<"\t";
-            total=total+paz;
-        }
-
-        rf<<egz<<"\t\t";
-        total=total/n*0.4+egz*0.6;
-        rf << std::setprecision(3) << total << '\n';
-    }
-    rf.close();
-    t2 = Clock::now();
-    std::cout<<std::chrono::duration_cast<TimeType>(t2 - t1).count()<<"\n";
-
-
-    //penktas failas
-    t1=Clock::now();
-    rf.open("5.txt");
-    rf<<"vardas\t\tpavarde\t\t";
-    for(int i=1; i<=n; i++)
-    {
-        rf<<"nd"<<i<<"\t";
-    }
-    rf<<"egzaminas\tgalutinis balas\n";
-    for(int j=0; j<100000; j++)
-    {
-        pav="pavarde"+std::to_string(j+1);
-        var="vardas"+std::to_string(j+1);
-        rf<<var;
-        if(var.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        rf<<pav;
-        if(pav.length()>=8)
-        {
-            rf<<"\t";
-        }
-        else
-            rf<<"\t\t";
-        egz=d(mt);
-        total=0;
-        for(int i=0; i<n; i++)
-        {
-            paz=d(mt);
-            rf<<paz<<"\t";
-            total=total+paz;
-        }
-
-        rf<<egz<<"\t\t";
-        total=total/n*0.4+egz*0.6;
-        rf << std::setprecision(3) << total << '\n';
-    }
-    rf.close();
-    t2 = Clock::now();
-    std::cout<<std::chrono::duration_cast<TimeType>(t2 - t1).count()<<"\n";*/
     return 0;
 }
