@@ -2,6 +2,7 @@
 
 # Trukmių lentelė
 laikas skaiciuojamas milisekundėmis.
+
 | Generuotų studentų skaičius faile | Vector | Deque | List
 |------------ | ------------- |-------------|--------
 |10 | 15| 15 | 7
