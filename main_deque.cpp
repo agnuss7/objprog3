@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <deque>
 #include <string>
 #include <iomanip>
 #include <chrono>
@@ -18,10 +19,10 @@ int main()
 
 {
     char b;
-    std::vector<studentai> A;
-    std::ifstream df("1.txt");
+    std::deque<studentai> A;
+    std::ifstream df("4.txt");
 
-    const std::size_t R = 100;
+    const std::size_t R = 10000;
 std::chrono::high_resolution_clock::time_point t1;
 std::chrono::high_resolution_clock::time_point t2;
 
@@ -33,7 +34,6 @@ std::chrono::high_resolution_clock::time_point t2;
     }//skaiciuok
     t1=Clock::now();
     //nuo cia
-   A.reserve(R);
     A.resize(R);
     for(std::size_t i=0;i<R;i++) //nuskaitom
     {
@@ -70,13 +70,6 @@ std::chrono::high_resolution_clock::time_point t2;
             i=SIZE_MAX;
         }
     }
-
-
-
-
-
-
-
 
 
     for(std::size_t i=0; i<R; i++) //suskaiciuoja nd vidurkius/medianas
