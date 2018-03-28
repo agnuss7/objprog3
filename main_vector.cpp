@@ -19,7 +19,7 @@ int main()
 {
     char b;
     std::vector<studentai> A;
-    std::ifstream df("1.txt");
+    std::ifstream df("2.txt");
 
     const std::size_t R = 100;
 std::chrono::high_resolution_clock::time_point t1;
