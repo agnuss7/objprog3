@@ -4,10 +4,9 @@
 #include <string>
 #include <iomanip>
 #include <list>
+#include <algorithm>
 #include <chrono>
-#include <stdint.h>
 #include "studentai.h"
-#include "sukeist_v.h"
 const std::size_t n=20;
 typedef std::chrono::high_resolution_clock Clock;
 typedef std::chrono::milliseconds TimeType;
@@ -68,16 +67,7 @@ for(std::size_t i=1;i<=temp;i++)
     {
         gf>>G.back().paz[j];
     }
-    for(std::size_t o=0; o<n-1; o++)        //isrikiuoju nuo did iki maz
-            {
-                if(G.back().paz[o]<G.back().paz[o+1])
-                {
-                    G.back().paz[o]=G.back().paz[o]+G.back().paz[o+1];
-                    G.back().paz[o+1]=G.back().paz[o]-G.back().paz[o+1];
-                    G.back().paz[o]=G.back().paz[o]-G.back().paz[o+1];
-                    o=SIZE_MAX;
-                }
-            }
+    std::sort(G.back().paz.begin(),G.back().paz.end());
     gf>>G.back().egz>>G.back().vidtotal;
     gf.get(b);
     G.back().vidnd=0;

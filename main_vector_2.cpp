@@ -1,13 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <deque>
 #include <string>
 #include <iomanip>
 #include <chrono>
 #include <algorithm>
 #include "studentai.h"
-#include "sukeist.h"
 const std::size_t n=20;
 typedef std::chrono::high_resolution_clock Clock;
 typedef std::chrono::milliseconds TimeType;
@@ -25,10 +23,11 @@ int main()
 
 {
     char b;
-    std::deque<studentai> A;
-    std::ifstream df("5.txt");
+    std::vector<studentai> A;
+    std::vector<studentai> A1;
+    std::ifstream df("1.txt");
 
-    const std::size_t R = 100000;
+    const std::size_t R = 10;
     std::chrono::high_resolution_clock::time_point t1;
     std::chrono::high_resolution_clock::time_point t2;
 
@@ -39,8 +38,12 @@ int main()
     }//skaiciuok
     t1=Clock::now();
     //nuo cia
+    A.reserve(R);
+    A1.reserve(R);
     A.resize(R);
-    for(std::size_t i=0;i<R;i++) //nuskaitom
+    std::size_t f = R;
+    std::size_t y=0;
+    for(std::size_t i=0;i<f;i++) //nuskaitom
     {
         A[i].paz.reserve(n);
         A[i].paz.resize(n);
@@ -65,14 +68,8 @@ int main()
         }
         df>>A[i].egz>>A[i].vidtotal;
         df.get(b);
-    }
-    df.close();
-    std::sort(A.begin(),A.end(),compare);
-    std::size_t f = R;
-    std::size_t y=0;
-    for(std::size_t i=0; i<f; i++) //suskaiciuoja nd vidurkius/medianas
-        {
-            A[i].vidnd=0;
+
+        A[i].vidnd=0;
             for(std::size_t o=0; o<n; o++)
             {
                 A[i].vidnd=A[i].vidnd+A[i].paz[o];
@@ -87,19 +84,20 @@ int main()
             {
                 A[i].mednd=A[i].paz[n/2];
             }
-        }
-        for(std::size_t i=0; i<f; i++)
-        {
-            if((A[i].vidnd<6 || A[i].mednd<6) && i<f)
+            if (A[i].vidnd<6 || A[i].mednd<6)
             {
-                for(std::size_t o=i; o<R-1; o++)
-                {
-                    sukeist(A[o],A[o+1]);
-                }
-                i--;
+                A1.resize(y+1);
+                A1[y]=A[i];
+                A[i].var.erase();
+                A[i].pav.erase();
+                y++;
                 f--;
+                i--;
             }
-        }
+    }
+    df.close();
+    std::sort(A.begin(),A.begin()+f,compare);
+    std::sort(A1.begin(),A1.end(),compare);
 //spausdinam
 cout<<"The cool kidz:\n";
         cout<<"Vardas\t\tPavarde\t\tGal. vidurkis\tGal. mediana\n";
@@ -130,13 +128,13 @@ cout<<"The cool kidz:\n";
             std::cout<<std::setprecision(3)<<A[i].medtotal<<"\n";
 
         }
-        if(f<R){
+        if(y>0){
         cout<<"Da stoopid loosers:\n";
         cout<<"Vardas\t\tPavarde\t\tnd vidurkis\tnd mediana\n";
-        while (f<R)
+        for(std::size_t i=0;i<y;i++)
         {
-            cout<<A[f].var;
-            if (A[f].var.size()<8)
+            cout<<A1[i].var;
+            if (A1[i].var.size()<8)
             {
                 cout<<"\t\t";
             }
@@ -144,8 +142,8 @@ cout<<"The cool kidz:\n";
             {
                 cout<<"\t";
             }
-            cout<<A[f].pav;
-            if (A[f].pav.size()<8)
+            cout<<A1[i].pav;
+            if (A1[i].pav.size()<8)
             {
                 cout<<"\t\t";
             }
@@ -154,8 +152,7 @@ cout<<"The cool kidz:\n";
                 cout<<"\t";
             }
 
-            cout<<std::setprecision(3)<<A[f].vidnd<<"\t\t"<<A[f].mednd<<"\n";
-            f++;
+            cout<<std::setprecision(3)<<A1[i].vidnd<<"\t\t"<<A1[i].mednd<<"\n";
         }}
 //iki cia
 cout<<"\n";
@@ -164,5 +161,4 @@ cout<<(std::chrono::duration_cast<TimeType>(t2 - t1)).count()<<"\n\n";
 
     return 0;
 }
-
 
