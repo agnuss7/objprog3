@@ -6,6 +6,8 @@ Mano skaičiavimo būdas buvo sumest visus "blogus" studentus į konteinerio gal
 Su list'u neišėjo, nes reikia konteinerio elementus pasiekinėti atsitiktinai.
 Tai labai neefektyvu.
 
+Kiekvieno main'o kažkur pradžioj yra konstanta žyminti studentų skaičių faile. Jį pakeist keičiant pateikiamą failą (1.txt, 2.txt...).
+
 ## Vektoriai
 
 | Generuotų studentų skaičius faile | mano | 2 konteineriai | 3 konteineriai
