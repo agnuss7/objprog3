@@ -1,7 +1,8 @@
-struct studentai
+class studentai
 
 {
 
+	private:
     std::string var;
 
     std::string pav;
@@ -17,5 +18,13 @@ struct studentai
     float vidtotal;
 
     float medtotal;
+public:
+void mediana ()
+{
+	
+
+
+
+}
 
 };
