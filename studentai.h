@@ -30,8 +30,7 @@ studentai() :egz(0) {}
 studentai(std::istream &in);
 studentai(std::string name, std::string sname, std::size_t e, std::vector<std::size_t> p); //cia kai irasinet ranka reikes
 ~studentai() {};
-bool operator<(const studentai &x);
-void read(std::istream& in);
+std::istream& read(std::istream& in);
 void mediana();
 void vidurkis();
 const float getVid();
