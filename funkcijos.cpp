@@ -22,7 +22,7 @@ studentai::studentai (std::string name, std::string sname, std::size_t e, std::v
 paz=p;
 }
 
-void studentai::read (std::istream& in)
+std::istream& studentai::read (std::istream& in)
 {
     char s;
     float q;
@@ -51,7 +51,9 @@ in.get(s);
 paz.pop_back();
     egz=paz.back();
     paz.pop_back();
+	return in;
 }
+
 
 void studentai::mediana()
 {
@@ -106,9 +108,11 @@ const std::string studentai::getPav ()
 return pav;
 }
 
-bool compare( studentai & e,  studentai & b)
+bool compare( studentai  e,   studentai  b)
 {
-return e.getPav()<b.getPav();
+if (e.getPav()<b.getPav())
+{return true;}
+else return false;
 }
 
 void cont2v (std::string p, const std::size_t N)
@@ -361,12 +365,6 @@ a1.back()=a.back();
 }
 }
 df.close();
-
-
-
-
-
-
 a1.sort(compare);
 a2.sort(compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";

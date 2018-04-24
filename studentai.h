@@ -39,7 +39,7 @@ const float getMed();
 const std::string getPav();
 void print(bool a);
 };
-bool compare(studentai & e,  studentai & b);
+bool compare(studentai  e,  studentai  b);
 void cont2v (std::string p, const std::size_t N);
 void cont3v(std::string p, const std::size_t N);
 void cont2d(std::string p, const std::size_t N);
