@@ -28,7 +28,7 @@ class studentai
 public:
 studentai() :egz(0) {}
 studentai(std::istream &in);
-studentai(std::string name, std::string sname, std::size_t e, std::vector<std::size_t> p); //cia kai irasinet ranka reikes
+void add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p); 
 ~studentai() {};
 std::istream& read(std::istream& in);
 void mediana();
@@ -37,7 +37,9 @@ const float getVid();
 const float getMed();
 const std::string getPav();
 void print(bool a);
+friend std::ostream& operator<<(std::ostream& out, const studentai& f);
 };
+
 bool compare(studentai  e,  studentai  b);
 void cont2v (std::string p, const std::size_t N);
 void cont3v(std::string p, const std::size_t N);

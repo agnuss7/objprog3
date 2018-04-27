@@ -7,6 +7,7 @@
 #include <vector>
 #include <list>
 #include <deque>
+#include <iomanip>
 using std::cout;
 
 studentai::studentai (std::istream &in)
@@ -14,12 +15,12 @@ studentai::studentai (std::istream &in)
     read(in);
 }
 
-studentai::studentai (std::string name, std::string sname, std::size_t e, std::vector<std::size_t> p)
+void studentai::add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p)
 {
     var=name;
     pav=sname;
     egz=e;
-paz=p;
+    paz=p;
 }
 
 std::istream& studentai::read (std::istream& in)
@@ -48,7 +49,6 @@ in.get(s);
         paz.push_back(q);
         in.get(s);
     }
-paz.pop_back();
     egz=paz.back();
     paz.pop_back();
 	return in;
@@ -91,7 +91,7 @@ cout<<var<<"\t";
 if(var.length()<8){cout<<"\t";}
 cout<<pav<<"\t";
 if(pav.length()<8){cout<<"\t";}
-cout<<vidtotal<<"\t\t"<<medtotal<<"\n";
+cout<<std::setprecision(3)<<vidtotal<<"\t\t"<<medtotal<<"\n";
 }
 if(a==0)
 {
@@ -99,7 +99,7 @@ cout<<var<<"\t";
 if(var.length()<8){cout<<"\t";}
 cout<<pav<<"\t";
 if(pav.length()<8){cout<<"\t";}
-cout<<vidnd<<"\t\t"<<mednd<<"\n";
+cout<<std::setprecision(3)<<vidnd<<"\t\t"<<mednd<<"\n";
 }
 }
 
@@ -117,7 +117,7 @@ else return false;
 
 void cont2v (std::string p, const std::size_t N)
 {
-     std::ifstream df(p);
+    std::ifstream df(p);
     char blarg;
     while(blarg!='\n')
     {
@@ -379,4 +379,17 @@ while(!a2.empty())
     a2.front().print(0);
     a2.pop_front();
 }
+}
+std::ostream& operator<<(std::ostream& out, const studentai& f)
+{
+    out << f.var << "\t";
+if(f.var.length()<8){out<<"\t";}
+out << f.pav<<"\t" ;
+if(f.pav.length()<8){out<<"\t";}
+    for(std::size_t i :f.paz)
+{
+out<<i<<"\t";
+}
+out<<f.egz<<"\n";
+   return out ;
 }
