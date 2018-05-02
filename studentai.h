@@ -26,6 +26,7 @@ class studentai
 
     float medtotal;
 public:
+///cia default konstruktorius
 studentai() :egz(0) {}
 studentai(std::istream &in);
 void add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p); 

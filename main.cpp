@@ -18,7 +18,7 @@ int main()
     std::size_t N=0;
     std::size_t M=20;
     do {
-            cout<<"Pasirinkite norima operacija:\n1 - ivesti studentus ranka.\n2 - generuokim studentu pazymius\n3 - skaiciuoti laika\n";
+            cout<<"Pasirinkite norima operacija:\n1 - ivesti studentus ranka.\n2 - generuokim studentu pazymius\n3 - skaiciuoti laika\n0 - noredami baigti programa\n";
             cin>>M;
 
     if(M==1)
@@ -26,6 +26,7 @@ int main()
         cout<<"sekite instrukcijom. iveskit varda, tada Tab, pavarde, vel tab, tada atskirdami\ntarpais veskit pazymius, paskutinis skaicius bus \negzamino pazymys, tada pereikit i kita eitute ir kartokit.\nnoredami baigti, naujoj eilutej dekit - zenkla ir enter.\n";
     std::ofstream rf("cheatycheat.txt");
     N=0;
+    P.clear();
     while(P.back()!='-'){std::getline(cin,P);
     rf<<P<<"\n";N++;}
 N--;N--;

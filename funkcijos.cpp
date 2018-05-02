@@ -14,7 +14,7 @@ studentai::studentai (std::istream &in)
 {
     read(in);
 }
-
+///taip mes ivesim visus reikalingus parametrus i klases objekta
 void studentai::add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p)
 {
     var=name;
@@ -22,7 +22,7 @@ void studentai::add (std::string & name, std::string & sname, std::size_t & e, s
     egz=e;
     paz=p;
 }
-
+///iraso varda, pavarde, pazymius ir egzamina i objekta is failo
 std::istream& studentai::read (std::istream& in)
 {
     char s;
@@ -54,9 +54,11 @@ in.get(s);
 	return in;
 }
 
-
+///apskaiciuoja nd mediana ir galutini bala
 void studentai::mediana()
 {
+if(paz.size()==0){mednd=0;}
+else{
     std::sort(paz.begin(),paz.end());
     if(paz.size()%2==0)
 {
@@ -65,24 +67,31 @@ mednd=(paz[paz.size()/2]+paz[paz.size()/2-1])/2;
 else
 {
 mednd=paz[paz.size()/2];
-}
+}}
 medtotal=mednd*0.4+egz*0.6;
 }
-
+///apskaiciuoja nd vidurki ir galutini bala
 void studentai::vidurkis()
 {
     vidnd=0;
-    for(std::size_t i:paz)
+if(paz.size()==0){vidnd=0;}
+  else{  for(std::size_t i:paz)
 {
     vidnd+=i;
 }
-vidnd=vidnd/paz.size();
+vidnd=vidnd/paz.size();}
 vidtotal=vidnd*0.4+egz*0.6;
 }
+///nd vidurkio getter'is
 const float studentai::getVid()
 {return vidnd;}
+///nd medianos getter'is
 const float studentai::getMed()
 {return mednd;}
+/**skausdina varda, pavarde
+*ir, priklausant nuo bool a busenos,
+*arba galutinius balus (geri studentai)
+arba nd vidurki ir mediana (blogi studentai)*/
 void studentai::print(bool a)
 {
 if(a==1)
@@ -102,12 +111,12 @@ if(pav.length()<8){cout<<"\t";}
 cout<<std::setprecision(3)<<vidnd<<"\t\t"<<mednd<<"\n";
 }
 }
-
+///pavardes getter'is
 const std::string studentai::getPav ()
 {
 return pav;
 }
-
+///naudojamas rikiuojant pagal pavardes
 bool compare( studentai  e,   studentai  b)
 {
 if (e.getPav()<b.getPav())
@@ -380,6 +389,7 @@ while(!a2.empty())
     a2.pop_front();
 }
 }
+///spausdina varda, pavarde, pazymius ir egzamina
 std::ostream& operator<<(std::ostream& out, const studentai& f)
 {
     out << f.var << "\t";
