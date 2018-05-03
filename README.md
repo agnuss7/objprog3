@@ -8,6 +8,4 @@ Vienintelis operatorius, kuris šiuo atveju buvo naudingas buvo "<<" spausdinant
 
 #Doxygen
 
-Veikia:
-
-![alt text](C:/Users/Agne/Documents/technologijoms/doxboiiiii.jpg "le dokumentacija")
+Prirašinėjau komentarų, kurie bus matomi Doxygen dokumentacijoj.
