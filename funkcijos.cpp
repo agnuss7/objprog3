@@ -83,10 +83,10 @@ vidnd=vidnd/paz.size();}
 vidtotal=vidnd*0.4+egz*0.6;
 }
 ///nd vidurkio getter'is
-const float studentai::getVid()
+float studentai::getVid() const
 {return vidnd;}
 ///nd medianos getter'is
-const float studentai::getMed()
+float studentai::getMed() const
 {return mednd;}
 /**skausdina varda, pavarde
 *ir, priklausant nuo bool a busenos,
@@ -112,19 +112,19 @@ cout<<std::setprecision(3)<<vidnd<<"\t\t"<<mednd<<"\n";
 }
 }
 ///pavardes getter'is
-const std::string studentai::getPav ()
+inline std::string studentai::getPav () const
 {
 return pav;
 }
 ///naudojamas rikiuojant pagal pavardes
-bool  compare ( studentai  e,   studentai b)
+bool compare  (const studentai & e, const  studentai & b)
 {
 if (e.getPav()<b.getPav())
 {return true;}
 else return false;
 }
-
-bool negavoSkolos(studentai  e)
+///naudojamas rikiuojant gerus/blogus
+bool negavoSkolos(const studentai & e)
 {
 if(e.getVid()<6 || e.getMed()<6)
 {return false;}
@@ -151,19 +151,6 @@ df.close();
 std::vector<studentai>::iterator it=std::partition(a.begin(),a.end(),negavoSkolos);
 std::vector<studentai> a2 (it,a.end());
 a.erase(it,a.end());
-
-
-
-
-
-
-
-
-
-
-
-
-
 std::sort(a.begin(),a.end(),compare);
 std::sort(a2.begin(),a2.end(),compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";
@@ -296,32 +283,22 @@ void cont2l(std::string p, const std::size_t N)
 {
     std::ifstream df(p);
     char blarg;
-std::size_t n=N;
-std::size_t k=0;
     while(blarg!='\n')
     {
         df.get(blarg);
     }
     std::list<studentai> a;
-std::list<studentai> a2;
-    for(std::size_t i=1;i<=n;i++)
+    for(std::size_t i=1;i<=N;i++)
 {
 a.resize(i);
 (a.back()).read(df);
 (a.back()).mediana();
 (a.back()).vidurkis();
-if(a.back().getVid()<6 || a.back().getMed()<6)
-{
-k++;
-a2.resize(k);
-a2.back()=a.back();
-a.pop_back();
-i--;
-n--;
-}
 }
 df.close();
-a.resize(n);
+std::list<studentai>::iterator it=partition(a.begin(),a.end(),negavoSkolos);
+std::list<studentai> a2(it,a.end());
+a.erase(it,a.end());
 a.sort(compare);
 a2.sort(compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";
@@ -342,35 +319,22 @@ void cont3l(std::string p, const std::size_t N)
 {
 std::ifstream df(p);
     char blarg;
-std::size_t k1=0;
-std::size_t k2=0;
     while(blarg!='\n')
     {
         df.get(blarg);
     }
     std::list<studentai> a;
-    std::list<studentai> a1;
-    std::list<studentai> a2;
     for(std::size_t i=1;i<=N;i++)
 {
 a.resize(i);
 (a.back()).read(df);
 (a.back()).mediana();
 (a.back()).vidurkis();
-if(a.back().getVid()<6 || a.back().getMed()<6)
-{
-k2++;
-a2.resize(k2);
-a2.back()=a.back();
-}
-else
-{
-k1++;
-a1.resize(k1);
-a1.back()=a.back();
-}
 }
 df.close();
+std::list<studentai>::iterator it=partition(a.begin(),a.end(),negavoSkolos);
+std::list<studentai> a1(a.begin(),it);
+std::list<studentai> a2(it,a.end());
 a1.sort(compare);
 a2.sort(compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";

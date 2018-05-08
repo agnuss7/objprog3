@@ -60,7 +60,7 @@ x[i].print(1);
     std::vector<std::size_t> mark;
     mark.reserve(30);
     std::size_t exam;
-    int s;
+    std::size_t s;
     studentai X;
     int kk=0;
    std::string stupid[]={"1.txt","2.txt","3.txt","4.txt","5.txt"};
@@ -80,7 +80,7 @@ t1=Clock::now();
     {
         Name="Vardas"+std::to_string(i+1);
         Sname="Pavarde"+std::to_string(i+1);
-        for(int l=0;l<s;l++)
+        for(std::size_t l=0;l<s;l++)
         {
             mark[l]=dist(rd);
         }
