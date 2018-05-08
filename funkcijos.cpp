@@ -117,11 +117,18 @@ const std::string studentai::getPav ()
 return pav;
 }
 ///naudojamas rikiuojant pagal pavardes
-bool compare( studentai  e,   studentai  b)
+bool  compare ( studentai  e,   studentai b)
 {
 if (e.getPav()<b.getPav())
 {return true;}
 else return false;
+}
+
+bool negavoSkolos(studentai  e)
+{
+if(e.getVid()<6 || e.getMed()<6)
+{return false;}
+else return true;
 }
 
 void cont2v (std::string p, const std::size_t N)
@@ -137,22 +144,26 @@ void cont2v (std::string p, const std::size_t N)
 for(std::size_t i=0;i<N;i++){
 a.resize(i+1);
 a[i].read(df);
+a.back().mediana();
+a.back().vidurkis();
 }
 df.close();
-std::vector<studentai> a2;
-a2.reserve(N);
+std::vector<studentai>::iterator it=std::partition(a.begin(),a.end(),negavoSkolos);
+std::vector<studentai> a2 (it,a.end());
+a.erase(it,a.end());
 
-for(std::size_t i=0;i<a.size();i++){
-        a[i].mediana();
-        a[i].vidurkis();
-        if(a[i].getMed()<6 || a[i].getVid()<6)
-        {
-            a2.resize(a2.size()+1);
-            a2.back()=a[i];
-            a.erase(a.begin()+i);
-            i--;
-        }
-}
+
+
+
+
+
+
+
+
+
+
+
+
 std::sort(a.begin(),a.end(),compare);
 std::sort(a2.begin(),a2.end(),compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";
@@ -179,26 +190,27 @@ std::ifstream df(p);
 for(std::size_t i=0;i<N;i++){
 a.resize(i+1);
 a[i].read(df);
+a[i].mediana();
+a[i].vidurkis();
 }
 df.close();
-std::vector<studentai> a1;
-std::vector<studentai> a2;
-a1.reserve(N);
-a2.reserve(N);
-for(std::size_t i=0;i<N;i++){
-        a[i].mediana();
-        a[i].vidurkis();
-        if(a[i].getMed()<6 || a[i].getVid()<6)
-        {
-            a2.resize(a2.size()+1);
-            a2.back()=a[i];
-        }
-else
-{
-a1.resize(a1.size()+1);
-            a1.back()=a[i];
-}
-}
+
+
+
+
+std::vector<studentai>::iterator it=std::partition(a.begin(),a.end(),negavoSkolos);
+std::vector<studentai> a2 (it,a.end());
+std::vector<studentai> a1 (a.begin(),it);
+
+
+
+
+
+
+
+
+
+
 std::sort(a1.begin(),a1.end(),compare);
 std::sort(a2.begin(),a2.end(),compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";
@@ -225,20 +237,13 @@ void cont2d(std::string p, const std::size_t N)
 for(std::size_t i=0;i<N;i++){
 a.resize(i+1);
 a[i].read(df);
+a[i].vidurkis();
+a[i].mediana();
 }
 df.close();
-std::deque<studentai> a2;
-for(std::size_t i=0;i<a.size();i++){
-        a[i].mediana();
-        a[i].vidurkis();
-        if(a[i].getMed()<6 || a[i].getVid()<6)
-        {
-            a2.resize(a2.size()+1);
-            a2.back()=a[i];
-            a.erase(a.begin()+i);
-            i--;
-        }
-}
+std::deque<studentai>::iterator it=std::partition(a.begin(),a.end(),negavoSkolos);
+std::deque<studentai> a2 (it,a.end());
+a.erase(it,a.end());
 std::sort(a.begin(),a.end(),compare);
 std::sort(a2.begin(),a2.end(),compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";
@@ -264,24 +269,16 @@ std::ifstream df(p);
 for(std::size_t i=0;i<N;i++){
 a.resize(i+1);
 a[i].read(df);
+a[i].vidurkis();
+a[i].mediana();
 }
 df.close();
-std::deque<studentai> a1;
-std::deque<studentai> a2;
-for(std::size_t i=0;i<N;i++){
-        a[i].mediana();
-        a[i].vidurkis();
-        if(a[i].getMed()<6 || a[i].getVid()<6)
-        {
-            a2.resize(a2.size()+1);
-            a2.back()=a[i];
-        }
-else
-{
-a1.resize(a1.size()+1);
-            a1.back()=a[i];
-}
-}
+
+std::deque<studentai>::iterator it=std::partition(a.begin(),a.end(),negavoSkolos);
+std::deque<studentai> a2 (it,a.end());
+std::deque<studentai> a1 (a.begin(),it);
+
+
 std::sort(a1.begin(),a1.end(),compare);
 std::sort(a2.begin(),a2.end(),compare);
 cout<<"The Kool Kidz\nvardas\t\tpavarde\t\tVid. gal.\tMed gal.\n";
