@@ -88,6 +88,12 @@ float studentai::getVid() const
 ///nd medianos getter'is
 float studentai::getMed() const
 {return mednd;}
+///galutinio balo su mediana getter'is
+float studentai::getGalM() const
+{return medtotal;}
+///galutinio balo su vidurkiu getter'is
+float studentai::getGalV() const
+{return vidtotal;}
 /**skausdina varda, pavarde
 *ir, priklausant nuo bool a busenos,
 *arba galutinius balus (geri studentai)
@@ -182,20 +188,9 @@ a[i].vidurkis();
 }
 df.close();
 
-
-
-
 std::vector<studentai>::iterator it=std::partition(a.begin(),a.end(),negavoSkolos);
 std::vector<studentai> a2 (it,a.end());
 std::vector<studentai> a1 (a.begin(),it);
-
-
-
-
-
-
-
-
 
 
 std::sort(a1.begin(),a1.end(),compare);

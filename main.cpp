@@ -10,8 +10,10 @@ using std::cout;
 using std::cin;
 typedef std::chrono::high_resolution_clock Clock;
 typedef std::chrono::milliseconds TimeType;
-int main()
-{
+
+
+
+    int main(){
     std::chrono::high_resolution_clock::time_point t1;
     std::chrono::high_resolution_clock::time_point t2;
     std::string P;
@@ -164,7 +166,10 @@ t1=Clock::now();
             }
         }
 
-    }}while(M!=0);
+    }
 
-    return 0;
-}
+    }while(M!=0);
+return 0;
+    }
+
+

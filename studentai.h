@@ -29,13 +29,15 @@ public:
 ///cia default konstruktorius
 studentai() :egz(0) {}
 studentai(std::istream &in);
-void add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p); 
+void add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p);
 ~studentai() {};
 std::istream& read(std::istream& in);
 void mediana();
 void vidurkis();
 float getVid() const;
 float getMed() const;
+float getGalM() const;
+float getGalV() const;
 inline std::string getPav() const;
 void print(bool a);
 friend std::ostream& operator<<(std::ostream& out, const studentai& f);
