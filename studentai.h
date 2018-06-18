@@ -5,14 +5,22 @@
 #include <fstream>
 #include <string>
 
-class studentai
+class zmogus {
+protected:
+    std::string var;
+    std::string pav;
+public:
+    virtual inline std::string getPav() const=0;
+    virtual void names(const std::string vv,const std::string pp)=0;
+    virtual ~zmogus(){};
+
+};
+
+class studentai: public zmogus
 
 {
 
 	private:
-    std::string var;
-
-    std::string pav;
 
     std::vector<std::size_t> paz;
 
@@ -28,8 +36,9 @@ class studentai
 public:
 ///cia default konstruktorius
 studentai() :egz(0) {}
+void names(const std::string vv,const std::string pp);
 studentai(std::istream &in);
-void add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p);
+void add (const std::string & name,const std::string & sname, std::size_t & e, std::vector<std::size_t> & p);
 ~studentai() {};
 std::istream& read(std::istream& in);
 void mediana();

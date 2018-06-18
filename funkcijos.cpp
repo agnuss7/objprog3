@@ -10,15 +10,20 @@
 #include <iomanip>
 using std::cout;
 
+void studentai::names(const std::string vv,const std::string pp)
+{
+    var=vv;
+    pav=pp;
+}
+
 studentai::studentai (std::istream &in)
 {
     read(in);
 }
 ///taip mes ivesim visus reikalingus parametrus i klases objekta
-void studentai::add (std::string & name, std::string & sname, std::size_t & e, std::vector<std::size_t> & p)
+void studentai::add (const std::string & name,const std::string & sname, std::size_t & e, std::vector<std::size_t> & p)
 {
-    var=name;
-    pav=sname;
+    names(name,sname);
     egz=e;
     paz=p;
 }
@@ -122,6 +127,7 @@ inline std::string studentai::getPav () const
 {
 return pav;
 }
+
 ///naudojamas rikiuojant pagal pavardes
 bool compare  (const studentai & e, const  studentai & b)
 {
